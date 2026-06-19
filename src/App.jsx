@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router";
 import { HomePage } from "./pages/HomePage";
+import { CheckoutPage } from "./pages/CheckoutPage";
 
 import "./App.css";
 
@@ -9,7 +10,7 @@ function App() {
       <Routes>
         {/* since path="/" has nothing in it we can use index */}
         <Route index element={<HomePage />} />
-        <Route path="checkout" element={<div>this is checkout page</div>} />
+        <Route path="/checkout" element={<CheckoutPage />} />
       </Routes>
     </>
   );
