@@ -1,3 +1,4 @@
+import { Routes, Route } from "react-router";
 import { HomePage } from "./pages/HomePage";
 
 import "./App.css";
@@ -5,7 +6,11 @@ import "./App.css";
 function App() {
   return (
     <>
-      <HomePage />
+      <Routes>
+        {/* since path="/" has nothing in it we can use index */}
+        <Route index element={<HomePage />} />
+        <Route path="checkout" element={<div>this is checkout page</div>} />
+      </Routes>
     </>
   );
 }
