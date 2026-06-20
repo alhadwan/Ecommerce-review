@@ -1,17 +1,16 @@
 import { Header } from "../components/Header";
-// import { products } from "../../ecommerce-starting-code/data/products";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import "./HomePage.css";
-// import { data } from "react-router";
 
 export function HomePage() {
-  const [products, setProducts] = useState();
+  const [products, setProducts] = useState([]);
 
-  fetch("http://localhost:3000/api/products")
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => setProducts(data));
+  useEffect(() => {
+    axios.get("http://localhost:3000/api/products").then((response) => {
+      setProducts(response.data);
+    });
+  }, []);
 
   return (
     <>
