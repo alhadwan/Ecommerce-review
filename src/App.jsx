@@ -3,6 +3,7 @@ import { HomePage } from "./pages/HomePage";
 import { CheckoutPage } from "./pages/checkout/CheckoutPage";
 import { OrdersPage } from "./pages/OrdersPage";
 import { TrackingPage } from "./pages/TrackingPage";
+import { NotFoundPage } from "./pages/NotFoundPage";
 
 import "./App.css";
 
@@ -10,6 +11,7 @@ function App() {
   return (
     <>
       <Routes>
+        <Route path="*" element={<NotFoundPage />} />
         {/* since path="/" has nothing in it we can use index */}
         <Route index element={<HomePage />} />
         <Route path="/checkout" element={<CheckoutPage />} />
