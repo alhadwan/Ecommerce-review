@@ -6,6 +6,7 @@ import { Link } from "react-router";
 export function TrackingPage() {
   return (
     <>
+      <link rel="icon" type="image/png" href="tracking-favicon.png" />
       <title>Tracking</title>
       <Header />
 
