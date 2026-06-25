@@ -115,6 +115,7 @@
 
 .orders-page .product-image-container {
   text-align: center;
+  max-height: 110px;
 }
 
 .orders-page .product-image-container img {
