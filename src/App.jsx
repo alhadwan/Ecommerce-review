@@ -25,7 +25,7 @@ function App() {
         {/* since path="/" has nothing in it we can use index */}
         <Route index element={<HomePage cart={cart} />} />
         <Route path="/checkout" element={<CheckoutPage cart={cart} />} />
-        <Route path="/orders" element={<OrdersPage />} />
+        <Route path="/orders" element={<OrdersPage cart={cart} />} />
         <Route path="/tracking" element={<TrackingPage />} />
       </Routes>
     </>
