@@ -1,12 +1,9 @@
-import { Link } from "react-router";
+import { CheckoutHeader } from "./CheckoutHeader";
+import { OrderSummery } from "./OrderSummary/OrderSummery";
 import { formatMoney } from "../../util/money";
 import { useEffect, useState } from "react";
 
-import logo from "../../assets/images/logo-white.png";
-import mobileLogo from "../../assets/images/mobile-logo.png";
-import checkoutLockIcon from "../../assets/images/icons/checkout-lock-icon.png";
 import axios from "axios";
-import dayjs from "dayjs";
 
 import "./CheckoutPage.css";
 import "./CheckoutHeader.css";
@@ -30,124 +27,14 @@ export function CheckoutPage({ cart }) {
     <>
       <link rel="icon" type="image/png" href="/cart-favicon.png" />
       <title>Checkout</title>
-      <div className="checkout-header">
-        <div className="header-content">
-          <div className="checkout-header-left-section">
-            <Link to="/">
-              <img className="logo" src={logo} />
-              <img className="mobile-logo" src={mobileLogo} />
-            </Link>
-          </div>
 
-          <div className="checkout-header-middle-section">
-            Checkout (
-            <Link className="return-to-home-link" to="/">
-              3 items
-            </Link>
-            )
-          </div>
-
-          <div className="checkout-header-right-section">
-            <img src={checkoutLockIcon} />
-          </div>
-        </div>
-      </div>
+      <CheckoutHeader />
 
       <div className="checkout-page">
         <div className="page-title">Review your order</div>
 
         <div className="checkout-grid">
-          <div className="order-summary">
-            {deliveryOptions.length > 0 &&
-              cart.map((cartItem) => {
-                const selectDeliveryOption = deliveryOptions.find(
-                  (deliveryOption) => {
-                    return cartItem.deliveryOptionId === deliveryOption.id;
-                  },
-                );
-
-                return (
-                  <div key={cartItem.id} className="cart-item-container">
-                    <div className="delivery-date">
-                      Delivery date:{" "}
-                      {dayjs(
-                        selectDeliveryOption.estimatedDeliveryTimeMs,
-                      ).format("dddd, MMMM D")}
-                    </div>
-
-                    <div className="cart-item-details-grid">
-                      <img
-                        className="product-image"
-                        src={cartItem.product.image}
-                      />
-
-                      <div className="cart-item-details">
-                        <div className="product-name">
-                          {cartItem.product.name}
-                        </div>
-                        <div className="product-price">
-                          {formatMoney(cartItem.product.priceCents)}
-                        </div>
-                        <div className="product-quantity">
-                          <span>
-                            {" "}
-                            Quantity:{" "}
-                            <span className="quantity-label">
-                              {cartItem.quantity}
-                            </span>{" "}
-                          </span>
-                          <span className="update-quantity-link link-primary">
-                            Update
-                          </span>
-                          <span className="delete-quantity-link link-primary">
-                            Delete
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="delivery-options">
-                        <div className="delivery-options-title">
-                          Choose a delivery option:
-                        </div>
-                        {deliveryOptions.map((deliveryOption) => {
-                          let priceString = "Free Shipping";
-                          if (deliveryOption.priceCents > 0) {
-                            priceString = `${formatMoney(deliveryOption.priceCents)} - Shipping`;
-                          }
-                          return (
-                            <div
-                              key={deliveryOption.id}
-                              className="delivery-option"
-                            >
-                              <input
-                                type="radio"
-                                checked={
-                                  deliveryOption.id ===
-                                  cartItem.deliveryOptionId
-                                }
-                                onChange={() => {}}
-                                className="delivery-option-input"
-                                name={`delivery-option-${cartItem.productId}`}
-                              />
-                              <div>
-                                <div className="delivery-option-date">
-                                  {dayjs(
-                                    deliveryOption.estimatedDeliveryTimeMs,
-                                  ).format("dddd, MMMM D")}
-                                </div>
-                                <div className="delivery-option-price">
-                                  {priceString}
-                                </div>
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-          </div>
+          <OrderSummery cart={cart} deliveryOptions={deliveryOptions} />
 
           <div className="payment-summary">
             <div className="payment-summary-title">Payment Summary</div>
