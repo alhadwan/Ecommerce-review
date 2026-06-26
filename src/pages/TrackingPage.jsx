@@ -11,6 +11,8 @@ export function TrackingPage({ cart }) {
 
   const [singleOrder, setSingleOrder] = useState(null);
 
+  console.log("singleOrder", singleOrder);
+
   useEffect(() => {
     const getSingleOrder = async () => {
       const response = await axios.get(`api/orders/${orderId}?expand=products`);
@@ -22,6 +24,30 @@ export function TrackingPage({ cart }) {
   const selectSingleProduct = singleOrder?.products.find((product) => {
     return product.productId === productId;
   });
+  console.log("selectSingleProduct", selectSingleProduct);
+
+  // gets the total time required for delivery
+  const totalDeliveryTime =
+    selectSingleProduct?.estimatedDeliveryTimeMs - singleOrder?.orderTimeMs;
+  console.log("totalDeliveryTime", totalDeliveryTime);
+
+  // calculate the amount of time that has passed since creating the order
+  // const timePassedMs = totalDeliveryTime * 0.3;
+  const timePassedMs = dayjs().valueOf() - singleOrder?.orderTimeMs; // what is the output of dayjs().valueOf()? -
+  console.log("timePassedMs", timePassedMs);
+
+  //delivery progress as a percent
+  const deliveryPercent = (timePassedMs / totalDeliveryTime) * 100;
+  console.log("deliveryPercent", deliveryPercent);
+
+  //preparing
+  const isPreparing = deliveryPercent < 33;
+
+  //Shipping
+  const isShipping = deliveryPercent >= 33 && deliveryPercent < 100;
+
+  // delivered
+  const isDelivered = deliveryPercent === 100;
 
   return (
     <>
@@ -37,7 +63,7 @@ export function TrackingPage({ cart }) {
           {singleOrder && (
             <>
               <div className="delivery-date">
-                Arriving on{" "}
+                {deliveryPercent >= 100 ? "Delivered on" : "Arriving on"}{" "}
                 {dayjs(selectSingleProduct.estimatedDeliveryTimeMs).format(
                   "dddd, MMMM D",
                 )}
@@ -45,7 +71,6 @@ export function TrackingPage({ cart }) {
 
               <div className="product-info">
                 {selectSingleProduct.product.name}
-                Black and Gray Athletic Cotton Socks - 6 Pairs
               </div>
 
               <div className="product-info">
@@ -58,13 +83,20 @@ export function TrackingPage({ cart }) {
               />
 
               <div className="progress-labels-container">
-                <div className="progress-label">Preparing</div>
-                <div className="progress-label current-status">Shipped</div>
-                <div className="progress-label">Delivered</div>
+                <div className={`progress-label ${isPreparing}`}>Preparing</div>
+                <div
+                  className={`progress-label ${isShipping && "current-status"}`}
+                >
+                  Shipped
+                </div>
+                <div className={`progress-label ${isDelivered}`}>Delivered</div>
               </div>
 
               <div className="progress-bar-container">
-                <div className="progress-bar"></div>
+                <div
+                  className="progress-bar"
+                  style={{ width: `${deliveryPercent}%` }}
+                ></div>
               </div>
             </>
           )}
