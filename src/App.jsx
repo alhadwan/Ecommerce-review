@@ -12,14 +12,18 @@ import "./App.css";
 
 function App() {
   const [cart, setCart] = useState([]);
+  const [paymentSummary, setPaymentSummary] = useState(null);
 
-  // using useCallback to memoize/stores the loadCart function, 
-  // so it dose not create a new function on every render. 
-  // This helps prevent unnecessary re-renders of components 
+  // using useCallback to memoize/stores the loadCart function,
+  // so it dose not create a new function on every render.
+  // This helps prevent unnecessary re-renders of components
   // that depend on this function.
   const loadCart = useCallback(async () => {
     const response = await axios.get("/api/cart-items?expand=product");
     setCart(response.data);
+
+    const paymentResponse = await axios.get("api/payment-summary");
+    setPaymentSummary(paymentResponse.data);
   }, []);
 
   useEffect(() => {
@@ -33,7 +37,10 @@ function App() {
         <Route path="*" element={<NotFoundPage cart={cart} />} />
         {/* since path="/" has nothing in it we can use index */}
         <Route index element={<HomePage cart={cart} loadCart={loadCart} />} />
-        <Route path="/checkout" element={<CheckoutPage cart={cart} />} />
+        <Route
+          path="/checkout"
+          element={<CheckoutPage cart={cart} loadCart={loadCart} paymentSummary={paymentSummary} setPaymentSummary={setPaymentSummary}/>}
+        />
         <Route path="/orders" element={<OrdersPage cart={cart} />} />
         <Route
           path="/tracking/:orderId/:productId"
