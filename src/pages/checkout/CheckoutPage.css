@@ -14,6 +14,13 @@
   margin-right: auto;
 }
 
+.checkout-page .empty-cart {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+}
+
 .checkout-page .page-title {
   font-weight: 700;
   font-size: 22px;

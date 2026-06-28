@@ -29,6 +29,12 @@ export function CheckoutPage({
     };
     getDeliverySummaryData();
   }, [setPaymentSummary]);
+
+  let cartQuantity = 0;
+  cart?.forEach((item) => {
+    cartQuantity += item.quantity;
+  });
+
   return (
     <>
       <link rel="icon" type="image/png" href="/cart-favicon.png" />
@@ -37,16 +43,30 @@ export function CheckoutPage({
       <CheckoutHeader cart={cart} />
 
       <div className="checkout-page">
-        <div className="page-title">Review your order</div>
+        {cartQuantity > 0 ? (
+          <>
+            <div className="page-title">Review your order</div>
 
-        <div className="checkout-grid">
-          <OrderSummery
-            cart={cart}
-            deliveryOptions={deliveryOptions}
-            loadCart={loadCart}
-          />
-          <PaymentSummary paymentSummary={paymentSummary} />
-        </div>
+            <div className="checkout-grid">
+              <OrderSummery
+                cart={cart}
+                deliveryOptions={deliveryOptions}
+                loadCart={loadCart}
+              />
+              <PaymentSummary
+                paymentSummary={paymentSummary}
+                loadCart={loadCart}
+              />
+            </div>
+          </>
+        ) : (
+          <div className="empty-cart">
+            <div className="empty-cart-message">Your cart is empty.</div>
+            <div className="continue-shopping">
+              <a href="/">Continue Shopping</a>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
