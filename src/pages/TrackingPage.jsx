@@ -11,7 +11,7 @@ export function TrackingPage({ cart }) {
 
   const [singleOrder, setSingleOrder] = useState(null);
 
-  console.log("singleOrder", singleOrder);
+  // console.log("singleOrder", singleOrder);
 
   useEffect(() => {
     const getSingleOrder = async () => {
@@ -24,21 +24,21 @@ export function TrackingPage({ cart }) {
   const selectSingleProduct = singleOrder?.products.find((product) => {
     return product.productId === productId;
   });
-  console.log("selectSingleProduct", selectSingleProduct);
+  // console.log("selectSingleProduct", selectSingleProduct);
 
   // gets the total time required for delivery
   const totalDeliveryTime =
     selectSingleProduct?.estimatedDeliveryTimeMs - singleOrder?.orderTimeMs;
-  console.log("totalDeliveryTime", totalDeliveryTime);
+  // console.log("totalDeliveryTime", totalDeliveryTime);
 
   // calculate the amount of time that has passed since creating the order
   // const timePassedMs = totalDeliveryTime * 0.3;
   const timePassedMs = dayjs().valueOf() - singleOrder?.orderTimeMs; // what is the output of dayjs().valueOf()? -
-  console.log("timePassedMs", timePassedMs);
+  // console.log("timePassedMs", timePassedMs);
 
   //delivery progress as a percent
   const deliveryPercent = (timePassedMs / totalDeliveryTime) * 100;
-  console.log("deliveryPercent", deliveryPercent);
+  // console.log("deliveryPercent", deliveryPercent);
 
   //preparing
   const isPreparing = deliveryPercent < 33;
