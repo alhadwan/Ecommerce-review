@@ -114,19 +114,29 @@
   margin-bottom: 5px;
 }
 
-.checkout-page .product-quantity .link-primary {
-  margin-left: 3px;
+.checkout-page .product-quantity {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.checkout-page .cart-item-details .quantity-actions {
+  display: flex;
+  justify-content: start;
+  gap: 15px;
+}
+
+.checkout-page .quantity-actions .link-primary {
+  background-color: rgb(25, 135, 85);
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  border-width: 0;
 }
 
 @media (max-width: 1000px) {
   .checkout-page .delivery-options {
-    /* grid-column: 1 means this element will be placed
-       in column 1 in the grid. (Normally, the column that
-       an element is placed in is determined by the order
-       of the elements in the HTML. grid-column overrides
-       this default ordering).
-
-       / span 2 means this element will take up 2 columns
+    /* span 2 means this element will take up 2 columns
        in the grid (Normally, each element takes up 1
        column in the grid). */
     grid-column: 1 / span 2;
