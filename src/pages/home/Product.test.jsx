@@ -1,6 +1,6 @@
 import React from "react";
 import { formatMoney } from "../../util/money";
-import { it, expect, describe, vi } from "vitest";
+import { it, expect, describe, vi, beforeEach } from "vitest";
 import { Product } from "./Product";
 // render -> display a component in a fake web page,
 // screen -> check if the component is displayed correctly
@@ -13,8 +13,12 @@ import axios from "axios";
 vi.mock("axios");
 
 describe("product component", () => {
-  it("displays the elements in the components", () => {
-    const product = {
+  let product;
+  let loadCart;
+  // to organize the code for better readability,
+  // we use beforeEach to set up the common test data and mocks
+  beforeEach(() => {
+    product = {
       id: "8b5a2ee1-6055-422a-a666-b34ba28b76d4",
       image:
         "http://localhost:5173/images/products/athletic-cotton-socks-6-pairs.jpg",
@@ -29,7 +33,26 @@ describe("product component", () => {
 
     // using vi.fn to create an empty function(mock) so it dose not contact
     // the backend and mutate the data.
-    const loadCart = vi.fn();
+    loadCart = vi.fn();
+  });
+
+  it("displays the elements in the components", () => {
+    // const product = {
+    //   id: "8b5a2ee1-6055-422a-a666-b34ba28b76d4",
+    //   image:
+    //     "http://localhost:5173/images/products/athletic-cotton-socks-6-pairs.jpg",
+    //   name: "Black and Gray Athletic Cotton Socks - 6 Pairs",
+    //   rating: {
+    //     stars: 4.5,
+    //     count: 87,
+    //   },
+    //   priceCents: 1099,
+    //   keywords: ["socks", "sports", "apparel"],
+    // };
+
+    // // using vi.fn to create an empty function(mock) so it dose not contact
+    // // the backend and mutate the data.
+    // const loadCart = vi.fn();
 
     render(<Product product={product} loadCart={loadCart} />);
 
@@ -50,21 +73,21 @@ describe("product component", () => {
   });
 
   it("adds products to the cart", async () => {
-    const product = {
-      id: "8b5a2ee1-6055-422a-a666-b34ba28b76d4",
-      image:
-        "http://localhost:5173/images/products/athletic-cotton-socks-6-pairs.jpg",
-      name: "Black and Gray Athletic Cotton Socks - 6 Pairs",
-      rating: {
-        stars: 4.5,
-        count: 87,
-      },
-      priceCents: 1099,
-      keywords: ["socks", "sports", "apparel"],
-    };
+    // const product = {
+    //   id: "8b5a2ee1-6055-422a-a666-b34ba28b76d4",
+    //   image:
+    //     "http://localhost:5173/images/products/athletic-cotton-socks-6-pairs.jpg",
+    //   name: "Black and Gray Athletic Cotton Socks - 6 Pairs",
+    //   rating: {
+    //     stars: 4.5,
+    //     count: 87,
+    //   },
+    //   priceCents: 1099,
+    //   keywords: ["socks", "sports", "apparel"],
+    // };
 
-    // using vi.fn to create an empty function(mock) so it dose not contact
-    // the backend and mutate the data.
+    // // using vi.fn to create an empty function(mock) so it dose not contact
+    // // the backend and mutate the data.
     const loadCart = vi.fn();
 
     render(<Product product={product} loadCart={loadCart} />);
